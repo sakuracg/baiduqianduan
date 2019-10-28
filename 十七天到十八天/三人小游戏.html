@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>三人小游戏</title>
+</head>
+<body>  
+</body>
+<script>  
+  for(var i=1;i<=100;i++){
+    var patt = /[3]\d*/;
+    if(i%3 == 0 || patt.test(i)){
+      console.log('PA');
+    }else{
+      console.log(i);
+    }
+  }
+</script>
+</html>

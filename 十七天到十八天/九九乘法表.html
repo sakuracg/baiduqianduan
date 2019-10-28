@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>九九乘法表</title>
+  <style>
+    table{
+      text-align: center;
+    }
+    table td{
+      color: #000;
+      background: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    var date = new Date();
+    var hour = date.getHours();
+    // console.log(hour);
+    if(hour<6){
+      alert('深夜了睡觉哦吧！！！');
+    }else if(hour >=6 && hour < 12){
+      alert('早上好！');
+    }else if(hour>=12 && hour < 18){
+      alert('下午好！');
+    }else{
+      alert('晚上好！');
+    }
+  </script>
+  <table cellpadding=1 border="1">
+    <tbody id="tableNine">
+    </tbody>
+  </table> 
+</body>
+<script>
+  var numArr = [];
+  var numString;
+  var tableNine = document.getElementById('tableNine');
+  for(var i=1;i<=9;i++){
+    for(var j=1;j<=i;j++){
+      numArr.push(i*j);      
+    }
+    createTr(numArr);
+    numString = numArr.join(',');
+    console.log(numString);
+    numArr = [];
+    console.log('\n');
+  }
+  function createTr(numArr){
+    var tr = document.createElement('tr');    
+    for(var i=0;i<numArr.length;i++){
+      var td = document.createElement('td');
+      td.innerText = numArr[i];
+      tr.appendChild(td);
+    }
+    tableNine.appendChild(tr);
+  }    
+</script>
+</html>
