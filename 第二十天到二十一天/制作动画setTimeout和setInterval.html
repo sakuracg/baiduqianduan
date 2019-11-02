@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>setTimeout与setInterval</title>  
+</head>
+<body>
+  <div id="fade-obj" style="width:300px;height:300px;background:#000"></div>
+  <button id="fade-btn">淡出</button>
+</body>
+<script>
+  var fadeObj = document.getElementById('fade-obj');
+  var fadeBtn = document.getElementById('fade-btn');
+  var opacityCun = 1;
+  var flag = 1;
+  function fadeColor(){
+    if(flag == 1){
+      if(opacityCun>0){      
+        fadeBtn.setAttribute('disabled',true);
+        fadeObj.style.opacity = opacityCun;
+        opacityCun -= 0.1;
+        t = setTimeout("fadeColor()",100);      
+      }else{
+        opacityCun = 0;
+        flag = 0;      
+        fadeBtn.removeAttribute('disabled');
+        fadeBtn.innerHTML = '淡入'; 
+      }
+    }else if(flag == 0){
+      if(opacityCun<=1){
+        fadeBtn.setAttribute('disabled',true);
+        fadeObj.style.opacity = opacityCun;
+        opacityCun += 0.1;
+        t = setTimeout("fadeColor()",100);
+      }else{
+        opacityCun = 1;
+        flag = 1;      
+        fadeBtn.removeAttribute('disabled');
+        fadeBtn.innerHTML = '淡出'; 
+      }
+    }      
+    
+    
+  }
+  
+  fadeBtn.addEventListener('click',fadeColor);
+</script>
+</html>

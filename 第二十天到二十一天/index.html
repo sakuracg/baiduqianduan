@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <m10eta name="viewport" content="width=
+  1, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>随便的</title>
+</head>
+<body>
+  <input id="name" type="text">    
+  <button id="submit-btn">Submit</button>
+</body>
+<script>
+  
+  var submitBtn = document.getElementById('submit-btn');
+  var input = document.getElementById('name');
+  function showImg(){
+    console.log(input.value);
+  }
+  input.onkeydown = function(ev){
+    var ev = ev || window.event;
+    if(ev.keyCode==27){
+      input.value = '';
+    }
+    if(ev.keyCode==13){
+      showImg();
+    } 
+    submitBtn.addEventListener('click',showImg);
+    // console.log(ev.keyCode);
+
+  }
+  
+
+</script>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .sprite{
+      width: 480px;
+      height: 480px;
+      background: url('erik_ce204002.jpg') no-repeat;
+      background-position: 0 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="sprite"></div>
+</body>
+<script>
+  var sprite = document.querySelector('.sprite');
+  var i = 0;
+  var t = null;
+  function runSprite(){          
+    if(i<17){    
+      sprite.style.backgroundPositionY = -i*480 + 'px';    
+      i += 1;     
+      t = setTimeout('runSprite()',100);
+    }else{      
+      clearTimeout(t);
+      i--;
+      reverse();        
+    }  
+  }
+  function reverse(){
+    sprite.style.backgroundPositionY = -i*480 + 'px';    
+    if(i>0){     
+      i -= 1;
+      t = setTimeout('reverse()',100);
+    }else{
+      i++;
+      clearTimeout(t);      
+      runSprite();
+    }   
+  }
+  runSprite();
+</script>
+</html>
