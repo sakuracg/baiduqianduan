@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+  var arr = [43, 54, 4, -4, 84, 100, 58, 27, 140];
+        //将上面数组分别按从大到小以及从小到大进行排序后在console中输出
+  console.log(arr.sort((a,b)=>a-b));
+  console.log(arr.sort((a,b)=>b-a));
+
+  var arr1 = ['apple', 'dog', 'cat', 'car', 'zoo', 'orange', 'airplane'];
+        //将上面数组分别按字母顺序a-z及z-a进行排序，在console中输出
+  console.log(arr1.sort());
+  console.log(arr1.sort((a,b)=>a-b));
+
+  var arr2 = [[10, 14], [16, 60], [7, 44], [26, 35], [22, 63]];
+        //将上面的二维数组，按照每个元素中第二个数从大到小的顺序进行排序输出，输出结果应该为：
+        //[[22, 63], [16, 60], [7, 44], [26, 35], [10, 14]]
+  console.log(arr2.sort((a,b)=>a[1]-b[1]));
+        //这里是依次将数组元素赋值a,b; 例如将arr2[0]([10,14])赋值给a, 将arr2[1]([16,60])赋值给b
+        //   升序  排第二列   用a[1](14)-b[1](60)来进行比较, 大于0则a放到b后面, 等于0则位置不变, 小于0则a放到b前面
+        //   降序  排第一列   返回值用b[0]-a[0]即可      
+
+  var arr3 = [
+    {
+        id: 1,
+        name: 'candy',
+        value: 40
+    }, {
+        id: 2,
+        name: 'Simon',
+        value: 50
+    }, {
+        id: 3,
+        name: 'Tony',
+        value: 45
+    }, {
+        id: 4,
+        name: 'Annie',
+        value: 60
+    }
+];
+      //将上面数组分别按元素对象的value值从小到大进行排序后输出
+  console.log(arr3.sort((a,b)=>a.value-b.value));
+</script>
+</html>
