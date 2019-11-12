@@ -15,8 +15,8 @@
   var outer =document.getElementById('outer');
   outer.addEventListener('click',function(e){
     console.log(e.target.id);
-    // e.stopPropagation();//只能组织事件冒泡的传播
-    e.stopImmediatePropagation();
+    // e.stopPropagation();//只能阻止了事件冒泡的传播
+    e.stopImmediatePropagation();   //不仅组织了事件的传播还阻止了后续事件
   });
   outer.addEventListener('click',function(e){
     console.log(this.id);

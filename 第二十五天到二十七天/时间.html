@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <select id="year-select">
+  </select>
+
+  <select id="month-select">
+  </select>
+
+  <select id="day-select">
+  </select>
+
+  <select id="hour-select">
+  </select>
+
+  <select id="minute-select">     
+  </select>
+
+  <select id="second-select">
+  </select>
+
+  <p id="result-wrapper">现在距离 2001年1月1日星期X HH:MM:SS 还有 X 天 X 小时 X 分 X 秒</p>
+</body>
+<script>
+  let selectAll = document.getElementsByTagName('select');
+  let result = document.getElementById('result-wrapper');
+  let T = null;
+  //更改年月时 同时更改天数
+  selectAll[0].addEventListener('change',function(event){          
+    createOption(selectAll[2]);
+    clearInterval(T);
+    compareToday(); 
+  });
+  selectAll[1].addEventListener('change',function(event){      
+    createOption(selectAll[2]);    
+    clearInterval(T);
+    compareToday();
+  });
+  //变动select框，改变时间
+  for(let i=2;i<selectAll.length;i++){
+    selectAll[0].addEventListener('change',function(event){
+      clearInterval(T);
+      compareToday(); 
+    });
+  }
+
+  //初始化select标签
+  for(let i=0;i<selectAll.length;i++){
+    createOption(selectAll[i]);
+  }
+
+  compareToday();
+  //和现在的时间作比较
+  function compareToday(){
+    let date1 = [],dateIndex;
+    for(let i=0;i<selectAll.length;i++){
+      dateIndex = selectAll[i].selectedIndex;
+      date1[i] = selectAll[i].options[dateIndex].value;
+    }    
+    let dateCurrent = new Date();    
+    let dateCompare = new Date(date1[0],date1[1]-1,date1[2],date1[3],date1[4],date1[5]);
+    let time = (dateCompare - dateCurrent) / 1000;  //毫秒值    
+    let flag = 0;  // 0 为未来， 1为过去
+    if(time <= 0){
+      flag = 1;      
+      time = -time;      
+    }
+
+     //得到距离那时候的天数
+    
+    let day = Math.floor(time / (24*60*60)),
+        hour = Math.floor(time % (24*60*60) / (60*60)),
+        minute = Math.floor(time % (24*60*60) % (60*60) / 60),
+        second = Math.floor(time % (24*60*60) % (60*60) % 60);    
+    let text = flag?' 已经过去 ':' 还有 ';
+    let week = getCompareWeek(dateCompare.getDay());
+
+    result.innerHTML = ''  ;
+    result.innerHTML = '现在距离 ' + date1[0] +'年' + date1[1] +'月' + date1[2]+'日 '
+              + week +' '+ showHMS(date1[3]) +':'+ showHMS(date1[4]) +':'+ showHMS(date1[5]) + text
+              + day +'天 ' + hour +'小时 '+ minute +'分 ' + second +  '秒';
+    T = setInterval('compareToday()',500);
+  }
+
+  //显示时分秒的标准格式
+  function showHMS(time){
+    return time < 10? '0' + time :time; 
+  }
+  //得到要比较的星期
+  function getCompareWeek(n){
+    let name;
+    // 一会字符的一会数字的，真特么的！！！！
+    switch(n){
+      case 0:name = '星期一';break;
+      case 1:name = '星期二';break;
+      case 2:name = '星期三';break;
+      case 3:name = '星期四';break;
+      case 4:name = '星期五';break;
+      case 5:name = '星期六';break;
+      case 6:name = '星期日';break;
+    }
+    return name;    
+  }
+
+  //创建option
+  function createOption(objSelect){
+    switch(objSelect.id){
+      case 'year-select': createYear(objSelect);break;
+      case 'month-select':createMonth(objSelect);break;
+      case 'day-select':createDate(objSelect);break;
+      case 'hour-select':createHour(objSelect);break;
+      case 'minute-select':
+      case 'second-select':createMinuteSeconds(objSelect);break;
+    }
+  }
+  
+  function createYear(obj){    
+    for(let i=2000;i<2050;i++){
+      let y = document.createElement('option');
+      y.value = i;
+      y.innerHTML = i;
+      obj.appendChild(y);      
+    }
+  }
+  function createMonth(obj){  
+    for(let i=1;i<=12;i++){
+      let m = document.createElement('option');
+      m.value = i;
+      m.innerHTML = i;
+      obj.appendChild(m);
+    }
+  }
+  function createDate(obj){  
+    obj.innerHTML = '';  
+    let indexY = selectAll[0].selectedIndex,
+        indexM = selectAll[1].selectedIndex;
+    let indexYValue = selectAll[0].options[indexY].value,
+        indexMValue = selectAll[1].options[indexM].value;    
+    let two = 0,num = 0;  //二月的天数，以及当前选中月份的天数
+    if(indexYValue%4==0&&indexYValue%100!=0 || indexYValue%400==0){ //判断闰年
+      two = 29;
+    }else{
+      two = 28;
+    }
+    switch(indexMValue){
+      case '1':
+      case '3':
+      case '5':
+      case '7':
+      case '8':
+      case '10':
+      case '12':num = 31;break;
+      case '2': num = two;break;
+      case '4':
+      case '6':
+      case '9':
+      case '11':num = 30;break;
+    }    
+    for(let i=1;i<=num;i++){
+      let d = document.createElement('option');
+      d.value = i;
+      d.innerHTML = i;
+      obj.appendChild(d);
+    }
+  }
+  function createHour(obj){
+    for(let i=0;i<24;i++){
+      let h = document.createElement('option');
+      h.value = i;
+      if(i<10){
+        h.innerHTML = '0' + i;
+      }else{
+        h.innerHTML = i;
+      }      
+      obj.appendChild(h);
+    }
+  }
+  function createMinuteSeconds(obj){
+    for(let i=0;i<60;i++){
+      let ms = document.createElement('option');
+      ms.value = i;
+      if(i<10){
+        ms.innerHTML = '0' + i;
+      }else{
+        ms.innerHTML = i;
+      }   
+      obj.appendChild(ms);
+    }
+  }
+</script>
+</html>
