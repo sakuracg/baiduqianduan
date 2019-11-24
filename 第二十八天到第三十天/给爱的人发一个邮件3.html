@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>加入键盘，基于数据操作</title>
+  <link rel="stylesheet" type="text/css" href="./reset.css">
+  <style>  
+    .wrapper{
+      width: 600px;
+      height: 300px;      
+      position: relative;     
+      margin: 100px auto;
+      padding: 150px 0 0 0px;      
+      text-align: center;
+      background: url('./love.jpg') no-repeat;
+      background-size: contain;
+    }
+    ul{
+      position: absolute;      
+      top: 173px;
+      left: 216px;
+      width: 169px;
+      border: 1px solid gray;
+      border-radius: 5px;
+      background: rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+    ul li{
+      width: 3000px;
+      height: 25px;
+      line-height: 25px;
+      color: rgb(178,235,252);
+      border-bottom: 1px solid pink;
+      text-align: left;
+      
+    }
+    ul li:last-child{
+      border-bottom: 0;
+    }
+    /* ul li:hover{
+      background: cornflowerblue;
+    }   */
+    .liSelected{
+      background: cornflowerblue;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <input id="email-input" type="text">
+    <ul id="email-sug-wrapper" class="email-sug" style="display: none;"></ul>
+  </div> 
+</body>
+<script>
+  let postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+  let text = document.getElementById('email-input'),
+      emailUl = document.getElementById('email-sug-wrapper');
+  // 增加一个变量，用于存储当前选中的提示Li的序号
+  let nowSelectTipIndex = 0;
+  
+  text.focus();
+  text.onkeyup = function(event){
+    event = event || window.event;
+    // console.log(event.keyCode)// 13 38 40
+    if(event.keyCode !== undefined){
+      //如果按键不是回车上下键则重置
+      if(event.keyCode != 13 && event.keyCode != 38 && event.keyCode != 40){
+        reSetSlectTipIndex();
+      }
+      //如果是回车
+      if(event.keyCode == 13){
+        // 从当前提示框中选第 nowSelectTipIndex 个Li，将其HTML内容解码后填到input中
+        let contentTip = EncodeAndDecodeHtml.htmlDecode(document.getElementsByTagName('li')[nowSelectTipIndex].textContent);
+        text.textContent = contentTip;
+        hideHintFrame();
+      }
+      // 如果是上键
+      if(event.keyCode == 38){
+        //后面那个是最一开始按上键的时候的判断
+        if(nowSelectTipIndex == 1 || nowSelectTipIndex == 0){
+          nowSelectTipIndex = document.getElementsByTagName('li').length;          
+        }else{
+          nowSelectTipIndex -= 1;
+        }
+      }
+      // 如果是下键
+      if(event.keyCode == 40){
+        if(nowSelectTipIndex != document.getElementsByTagName('li').length){
+          nowSelectTipIndex += 1;          
+        }else{
+          nowSelectTipIndex = 1;          
+        }
+      }
+      if(event.keyCode == 27){
+        this.select();
+      }
+    }    
+    else if(event.key !== undefined){
+      
+    }
+    addLiToUl();
+    isEmaliUlShow();
+  }
+
+  emailUl.addEventListener('click',function(e){
+    e = e || window.event;
+    let target = e.target || e.srcElement;    
+    text.value = target.textContent;
+    hideHintFrame();
+    reSetSlectTipIndex();
+    text.focus();    
+  })
+
+  //鼠标浮在li上面 加入背景色
+  emailUl.addEventListener('mouseover',function(event){
+    event = event || window.event;
+    let target = event.target || event.srcElement;    
+    let liAll = document.getElementsByTagName('li');
+    for(let i=0;i<liAll.length;i++){
+      if(liAll[i].className != ''){
+        liAll[i].className = '';
+      }
+    }
+    if(target.tagName.toLowerCase() == 'li')
+      target.className = 'liSelected';
+  });
+
+  emailUl.addEventListener('mouseout',function(event){
+    event = event || window.event;
+    let target = event.target || event.srcElement;    
+    let liAll = document.getElementsByTagName('li');
+    for(let i=0;i<liAll.length;i++){     
+      liAll[i].className = '';     
+    }    
+  });
+  
+  //获取用户输入，去掉首位空格
+  function getInputValue(){
+    return text.value.trim();
+  }
+  
+  function createTipContent(){
+    let txt = getInputValue();
+    let flag = '';
+    let newPostFixList = [];
+    let index = txt.indexOf('@');
+    if(index > -1){
+      flag = txt.substring(index+1);  //得到文本框@符之后的内容
+      txt = txt.substring(0,index);
+    }
+    // 把用户输入和每一个postfix进行结合成为每一个Li
+    if(flag != ''){
+      let patt = new RegExp(flag);
+      for(let i=0;i<postfixList.length;i++){
+        if(patt.test(postfixList[i])){
+          newPostFixList.push(txt + '@' + postfixList[i]);
+        }
+      }
+    }  //如果都不满足则显示全部
+    if(newPostFixList.length == 0){
+      for(let i=0;i<postfixList.length;i++){
+        newPostFixList.push(txt + '@' + postfixList[i]);
+      }
+    }
+    return newPostFixList;
+  }
+  
+  // 创建li并添加到ul中  
+  function addLiToUl(){
+    emailUl.innerHTML = '';
+    let list = createTipContent();
+    for(let i=0;i<list.length;i++){
+      let oli = document.createElement('li');           
+      oli.textContent = EncodeAndDecodeHtml.htmlEncode(list[i]);
+      if(i+1 == nowSelectTipIndex){// 将第nowSelectTipIndex个Li的样式设置为被选样式
+        oli.className = 'liSelected';
+      }
+      emailUl.appendChild(oli);
+    }    
+  }
+  
+  function isEmaliUlShow() {
+    if(getInputValue() == ''){
+        hideHintFrame();
+      }else{
+        showHintFrame();
+      }
+  }
+
+  function hideHintFrame() {
+    emailUl.style.display = 'none';
+  }
+
+  function showHintFrame() {
+    emailUl.style.display = 'block';
+  }
+  
+  //重置选中状态
+  function reSetSlectTipIndex() {
+    // 将 nowSelectTipIndex 设为0
+    nowSelectTipIndex = 0;
+  }
+  
+  //解码与转码
+  let EncodeAndDecodeHtml = {
+    htmlEncode:function(html){
+      var temp = document.createElement('div');
+      // 将要转换的字符串设置为此元素的innerText(ie8以下)或者textContent(google,火狐,ie8)
+      (temp.textContent !== undefined)? temp.textContent = html : temp.innerText = html;
+      //返回innerHtml 经过浏览器转码的字符串
+      var txt = temp.innerHTML;
+      temp = null;
+      return txt;  
+    },
+    htmlDecode:function(txt){
+      let temp = document.createElement('div');
+      temp.innerHTML = txt;
+      let output = temp.innerText || temp.textContent;
+      temp = null;
+      return output;
+    }
+  }
+</script>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>面向对象1</title>
+</head>
+<body>
+  
+</body>
+<script>
+  let person1 = new Person('Bob', 'Smith', 32, 'female', ['music', 'skiing']);
+
+  person1.greeting();
+  person1.bio();
+  
+  function Person(first, last, age, gender, interests) {
+    this.name = {
+      'first': first,
+      'last': last
+    };
+    this.age = age;
+    this.gender = gender;
+    this.interests = interests;
+    this.bio = function() {
+      //  + this.interests[0] + ' and ' + this.interests[1] + '.'
+      let bioText = this.name.first + ' ' + this.name.last + ' is ' + this.age + ' years old.' + this.gender=='male'?'He':'She' +' likes ';
+      let len = this.interests.length;
+      for(let i=0;i<len-1;i++){
+        bioText += this.interests[i] + ' and ';
+      }
+      bioText += this.interests[len-1];
+      alert(bioText);
+    };
+    this.greeting = function() {
+      alert('Hi! I\'m ' + this.name.first + '.');
+    };
+
+    this.getName = function(){
+      return this.name;
+    }
+    this.getAge = function(){
+      return this.age;
+    }
+    this.getGender = function(){
+      return this.gender;
+    }
+    this.getInterests = function(){
+      return this.interests;
+    }
+
+    this.setName = function(name){
+      this.name = name;
+    }
+    this.setAge = function(age){
+      this.age = age;
+    }
+    this.setGender = function(gender){
+      this.gender = gender;
+    }
+    this.setInterests = function(interests){
+      this.interests = interests;
+    }
+  }
+</script>
+</html>

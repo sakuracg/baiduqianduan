@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" text="text/css" href="reset.css"/>
+  <title>邮箱后缀名</title>
+  <style>
+    .wrapper{
+      width: 600px;
+      height: 300px;      
+      position: relative;     
+      margin: 100px auto;
+      padding: 150px 0 0 0px;      
+      text-align: center;
+      background: url('./love.jpg') no-repeat;
+      background-size: contain;
+    }
+    ul{
+      position: absolute;      
+      top: 173px;
+      left: 216px;
+      width: 169px;
+      border: 1px solid gray;
+      border-radius: 5px;
+      background: rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+    ul li{
+      width: 3000px;
+      height: 25px;
+      line-height: 25px;
+      color: rgb(178,235,252);
+      border-bottom: 1px solid pink;
+      text-align: left;
+      
+    }
+    ul li:last-child{
+      border-bottom: 0;
+    }
+    ul li:hover{
+      background: cornflowerblue;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <input id="email-input" type="text">
+    <ul id="email-sug-wrapper" class="email-sug" style="display: none;"></ul>
+  </div>
+</body>
+<script>
+  let postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net'];
+  let text = document.getElementById('email-input'),
+      emailUl = document.getElementById('email-sug-wrapper');  
+
+  //输入框输入触发
+  text.oninput = function(){
+    addContentToLi();
+    if(text.value!=''){
+      emailUl.style.display = 'block';  
+    }else{
+      emailUl.style.display = 'none';  
+    }
+  }    
+  //li的点击事件动态点击
+  // TODO
+  emailUl.addEventListener('click',function(e){    
+    emailUl.style.display = 'none'; 
+  })
+
+  //创建Li并向li中添加内容
+  function addContentToLi(){    
+    let txt = text.value;
+    let originTxt = '';    //源li标签的内容
+    let arrList = createNewPostList();  //得到新postfix数组
+    let liAll = null;    //所有li标签
+    let index = text.value.indexOf('@');  
+    //创建li
+    createLi(emailUl,arrList);
+    liAll = document.getElementsByTagName('li');
+    //得到input中@符号前面的内容
+    if(index > 0){
+      txt = txt.substring(0,index);
+    }
+    //向li添加内容
+    for(let i=0;i<liAll.length;i++){
+      //得到li原来的内容
+      originTxt = liAll[i].textContent;      
+      liAll[i].textContent = txt + originTxt;
+    }
+  }
+
+  //创建li标签  
+  function createLi(ul,arr){
+    ul.innerHTML = '';
+    for(let i=0;i<arr.length;i++){
+      let li = document.createElement('li');
+      li.innerHTML = '@' + arr[i];
+      ul.appendChild(li);
+    }  
+  }
+
+  //判断是否要生成新数组
+  function createNewPostList(){    
+    let flag = '';    
+    let index = text.value.indexOf('@');  
+    //检查输入中是否有@符
+    if(index > 0){      
+      flag = text.value.substring(index);
+    }    
+    //是否生成新的数组
+    let newPostfixList = [];
+    if(flag != ''){
+      let patt = new RegExp(flag);
+      for(let i=0;i<postfixList.length;i++){
+        if(patt.test('@'+postfixList[i])){
+          newPostfixList.push(postfixList[i]);
+          console.log(newPostfixList[i]);
+        }
+      }
+      return newPostfixList;
+    }
+    return postfixList;        
+  }
+
+</script>
+</html>

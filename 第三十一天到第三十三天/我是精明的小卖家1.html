@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="region">
+    <!-- <label>
+        <input type="radio" value="华东" name="region" checked>华东
+    </label>
+    <label>
+        <input type="radio" value="华南" name="region">华南
+    </label>
+    <label>
+        <input type="radio" value="华北" name="region">华北
+    </label>    -->
+    <select>
+      <option value="华南">华南</option>
+      <option value="华北">华北</option>
+      <option value="华东">华东</option>
+    </select>
+    <select>
+      <option value="手机">手机</option>
+      <option value="笔记本">笔记本</option>
+      <option value="智能音箱">智能音箱</option>
+    </select>
+  </div>
+  <div id="table-wrapper"></div>
+</body>
+<script type="text/javascript" src="./ife31data.js"></script>
+<script>
+  let region = document.getElementById('region');
+  let selects = document.getElementsByTagName('select');
+  let tableWrapper = document.getElementById('table-wrapper');
+ 
+  createNewTable();
+  for(let i=0;i<selects.length;i++)
+    selects[i].onchange = function() {
+      // 渲染新的表格()
+      createNewTable();
+    }
+  
+  function getData() {
+      // 遍历数据 {
+      //     向要返回的数据list中添加符合表单所选项的数据
+      // }
+      //获取每个选择框select 的值      
+      let newDataArr = [],          
+          valueSelect = [];
+      for(let i=0;i<selects.length;i++){
+        let index = selects[i].selectedIndex;
+        valueSelect[i] = selects[i].options[index].value;
+      }
+      //匹配数据      
+      for(let i=0;i<sourceData.length;i++){
+        if(sourceData[i].region == valueSelect[0] && sourceData[i].product == valueSelect[1]){
+          newDataArr.push(sourceData[i]);
+        }
+      }      
+      return newDataArr;      
+  }
+
+  function createNewTable() {
+    tableWrapper.innerHTML = '';  //清空原表
+    // 根据表单选项获取数据
+    let data = getData();
+    // 渲染表格
+    let otable = document.createElement('table');
+    otable.setAttribute('border','1');
+    otable.style.textAlign = 'center';
+    //创建表头
+    let thProduct = document.createElement('th');
+    let thRegion = document.createElement('th');
+    thProduct.innerHTML = '商品';
+    thRegion.innerHTML = '地区';
+    otable.appendChild(thProduct);
+    otable.appendChild(thRegion);
+    for(let i=1;i<=12;i++){
+      let oth = document.createElement('th');
+      oth.innerHTML = i + '月';
+      otable.appendChild(oth);
+    }
+    //创建tr，td
+    for(let i=0;i<data.length;i++){
+      let otr = document.createElement('tr');
+      let td1 = document.createElement('td'),
+          td2 = document.createElement('td');
+      td1.innerHTML = data[i].product;
+      td2.innerHTML = data[i].region;
+      otr.appendChild(td1);
+      otr.appendChild(td2);
+      for(let j=0;j<data[i].sale.length;j++){
+        let otd = document.createElement('td');
+        otd.innerHTML = data[i].sale[j];
+        otr.appendChild(otd);
+      }
+      otable.appendChild(otr);      
+    }
+    tableWrapper.appendChild(otable);
+  }
+</script>
+</html>
