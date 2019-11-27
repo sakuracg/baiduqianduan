@@ -1,41 +1,48 @@
 // ES5
-function extend(Sub,Sup){
-  var F = function(){};
-  // 设置空函数的原型为超类
-  F.prototype = Sup.prototype;
-  // 实例化空函数，来传递超类
-  Sub.prototype = new F();
-  // 重置子类构造器为子类本身
-  Sub.prototype.constructor = Sub;
+// var ifeRestaurant = new Restaurant({
+//   cash: 1000000,
+//   seats: 20,
+//   staff: []
+// });
 
-  if(Sup.prototype.constructor === Object.prototype.constructor){
-    // 检查超类原型
-    Sup.prototype.constructor = Sup;
-  }
-}
+// var newCook = new Cook("Tony", 10000);
+// ifeRestaurant.hire(newCook);
+
+// console.log(ifeRestaurant.staff);
+
+// ifeRestaurant.fire(newCook);
+// console.log(ifeRestaurant.staff);
 
 // 餐厅类
-function Restaurant(cash, seats, staff){
-  this.cash = cash;
-  this.seats = seats;
-  this.staff = staff;
+// 属性 资金  座位数  员工
+// 方法 雇佣和解雇员工
+function Restaurant(obj){
+  this.cash = obj.cash;
+  this.seats = obj.seats;
+  this.staff = obj.staff;
 }
 // 雇佣职员
 Restaurant.prototype.hire = function(newCook){
-    this.staff.push(newCook);
+  newCook.id = '00' + this.staff.length;
+  this.staff.push(newCook);
+  console.log('Hello,' + newCook.name + '！我们的伙伴！');
 }
 // 解雇职员
-Restaurant.prototype.fire = function(cook){
-  for(let i=0;i<this.staff.length;i++){
-    if(cook.id == this.staff[i].id){
-      this.staff.splice(i,1);      
-    }
+Restaurant.prototype.fire = function(cook){  
+  let index = this.staff.indexOf(cook);
+  if(index !== -1){
+    console.log(cook.name + '你被解雇了，再见吧！');
+    this.staff.splice(index,1);    
+  }else{
+    console.log('咱们还没有雇佣这位小哥欧！');
   }
 }
 
 // 职员类
-function Employee(id, name, salary){
-  this.id = id;
+// 属性ID 姓名 薪水
+// 方法 完成工作
+function Employee(name, salary){
+  this.id = '';
   this.name = name;
   this.salary = salary;
 }
@@ -45,45 +52,49 @@ Employee.prototype.completeWork = function(){
 }
 
 // 服务员类继承自职员类
-function Attendant(id, name, salary, foods){
-  Employee.call(this, id, name, salary);
-  this.foods = foods;
+function Attendant(name, salary){
+  Employee.call(this, name, salary);
+  this.foods = [];
 }
 Attendant.prototype = Object.create(Employee.prototype);
 Attendant.prototype.constructor = Attendant;
-// 重写完成工作的方法
-Attendant.prototype.completeWork = function(){  
-  let txt = '';
-  if(typeof this.foods === Array){    
-    txt = '您要点的菜为:';
-    for(let i=0;i<this.foods.length;i++){
-      txt += ' ' + this.foods[i].name;
-    }    
-  }else{
-    txt = '给您上菜完毕';
-  }
-  console.log(txt);
+Attendant.prototype.completeWork = function(foods){    
+  if(typeof foods === Array){     //  点菜    
+    for(let i=0;i<foods.length;i++){
+      this.foods.push(foods[i]);         
+    } 
+    console.log('您要点的菜为:' + this.foods.join());   
+  }else{   //  上菜
+    this.foods = [];
+    console.log('给你上菜完毕');    
+  }  
 }
 
 // 厨师类
-function Cook(id, name, salary, food){
-  Employee.apply(this,arguments);
-  this.food = food;
+function Cook(name, salary){
+  Employee.call(this, name, salary);
 }
 Cook.prototype = Object.create(Employee.prototype);
 Cook.prototype.constructor = Cook;
-Cook.prototype.completeWork = function(){
-  console.log(this.name + '做完了' + this.food);
+Cook.prototype.completeWork = function(food){
+  console.log(this.name + '做完了' + food);
 }
 
 // 顾客类
 function Customer(){
+  this.menu = [];
 }
-Customer.prototype.ChooseDish = function(food){
+Customer.prototype.chooseDish = function(food){
+  this.menu.push(food);
   console.log('我要点' + food.name);
 }
-Customer.prototype.Eat = function(){
-  console.log('我开始吃了');
+Customer.prototype.eat = function(){
+  if(this.menu.length !== 0){
+    this.menu.splice(this.menu.indexOf(food),1);
+    console.log('我开始吃了' + food.name);
+  }else{
+    console.log('没菜了！');
+  }    
 }
 
 // 菜品类
@@ -93,9 +104,17 @@ function Food(name, cost, price){
   this.price = price;
 }
 
-let ifeRestaurant = new Restaurant(100000,20,[]);
-let newCook = new Cook('0001', 'Tony', 10000);
+// 测试
+var ifeRestaurant = new Restaurant({
+  cash: 1000000,
+  seats: 20,
+  staff: []
+});
+
+var newCook = new Cook("Tony", 10000);
 ifeRestaurant.hire(newCook);
+
 console.log(ifeRestaurant.staff);
+
 ifeRestaurant.fire(newCook);
 console.log(ifeRestaurant.staff);
