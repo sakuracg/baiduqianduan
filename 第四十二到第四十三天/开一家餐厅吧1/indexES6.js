@@ -21,6 +21,10 @@ class Restaurant{
     this.staff = obj.staff;
   }
 
+  getCash(){
+    return this.cash;
+  }
+
   hire(newCook){
     newCook.id = '00' + this.staff.length;
     this.staff.push(newCook);
