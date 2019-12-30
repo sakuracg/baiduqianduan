@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+  div{
+    float: left;
+    margin: 100px 0 0 100px;        
+  }
+  .change1{
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    background-color: #ccc; 
+    border: 1px solid #ccc;   
+  }
+  .change2{
+    transform: translate(10px,20px);
+    -ms-transform: translate(10px,20px);		/* IE 9 */
+    -webkit-transform: translate(10px,20px);	/* Safari and Chrome */
+    -o-transform: translate(10px,20px);		/* Opera */
+    -moz-transform: translate(10px,20px);		/* Firefox */
+  }
+  .change3{
+    transform: skewX(30deg);
+  }
+  .change4{
+    transform: scaleX(0.5);
+  }
+  /* 暂且搁置 */
+  .change5{
+    transform: matrix(1,0,0.75,0.68,0,30);
+  }
+</style>
+<body>
+  <div class="change1">box0</div>
+  <div class="change1 change2">box1</div>
+  <div class="change1 change3">box2</div>
+  <div class="change1 change4">box3</div>
+  <div class="change1 change5">box4</div>
+  <div class="change1 change6">box5</div>
+</body>
+</html>

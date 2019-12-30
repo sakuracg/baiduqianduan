@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<style>
+  .root{
+    margin: 50px auto;
+    width: 300px;        
+    text-align: center;
+  }
+  h1{    
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    transition: color .2s linear;
+    -moz-transition: color .2s linear;  /* Firefox 4 */
+    -webkit-transition: color .2s linear;  /* safari 和 Chrome */
+    -o-transition: color .2s linear;  /* Opera */
+  }
+  span{
+    width: 0;
+    margin: 0 auto;
+    display: block;
+    border-bottom: 4px solid #1c86ee;
+    transition: width .5s;
+    -moz-transition: width .5s;  /* Firefox 4 */
+    -webkit-transition: width .5s;  /* safari 和 Chrome */
+    -o-transition: width .5s;  /* Opera */
+  }
+  /* 过渡完成后的颜色 */
+  .text{
+    color: #1c86ee;
+  }
+  /* 过渡的长度 */
+  .underline{
+    width: 300px;
+  }
+  button{
+    padding: .4rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;    
+    background-color: #fff;  
+    box-sizing: inherit;  
+    cursor: pointer;
+  }
+</style>  
+<body>
+  <div class="root">
+    <h1 id="text">前端学院<span id="underline"></span></h1>
+    <button id="btn" onclick="changeStyle()">切换样式</button>
+  </div>  
+</body>
+<script>
+  var underline = document.getElementById("underline");
+  var text = document.getElementById("text");
+  var change = false;
+  function changeStyle(){
+    if(change){
+      underline.classList.remove('underline');
+      text.classList.remove('text');
+      change = false;
+    }else{
+      underline.classList.add('underline');
+      text.classList.add('text');
+      change = true;
+    }
+  }  
+</script>
+</html>

@@ -1,0 +1,74 @@
+/* 浮动解决 */
+
+/* 需要把dom结构中right放在center前面 */
+/* .container{
+  overflow: auto;
+}
+.left{
+  float: left;
+  width: 200px;
+  height: 100%;
+  background-color: red;    
+}
+.center{
+  height: 100%;
+  background-color: darkgoldenrod;
+}
+
+.right{
+  float: right;
+  width: 200px;
+  height: 100%;
+  background-color: darkmagenta;
+} */
+
+/* 浮动解决完毕 */
+
+/* position解决开始 */
+/* .container{
+  position: relative;  
+}
+.left,.right{
+  position: absolute;
+}
+.left{
+  width: 200px;
+  height: 100%;
+  top: 0;
+  left: 0;  
+  background-color: rgb(53, 155, 150);
+}
+.right{
+  width: 200px;
+  height: 100%;
+  top: 0;
+  right: 0;
+  background-color: darkolivegreen;
+}
+.center{
+  margin: 0 200px;
+  height: 100%;
+  background-color: darkred;
+} */
+
+/* position解决结束 */
+
+/* flex解决开始 */
+.container{
+  display: flex;  
+}
+.left{
+  width: 200px;
+  height: 100%;
+  background-color: darksalmon;
+}
+.center{
+  flex: 1;
+  height: 100%;
+  background-color: darkseagreen;
+}
+.right{
+  width: 200px;
+  height: 100%;
+  background-color: deeppink;
+}

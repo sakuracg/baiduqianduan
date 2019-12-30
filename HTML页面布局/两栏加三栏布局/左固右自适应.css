@@ -1,0 +1,50 @@
+/* 浮动解决 */
+
+.left{
+  float: left;
+  width: 200px;
+  height: 100%;
+  background-color: chocolate;
+}
+.right{
+  margin-left: 200px;
+  height: 100%;
+  background-color: coral;
+}
+
+/* 浮动解决完毕 */
+
+
+/* position解决开始 */
+
+/* .left{
+  position: absolute;
+  width: 200px;
+  height: 100%;
+  left: 0;
+  background-color: cornsilk;
+}
+.right{
+  margin-left: 200px;
+  height: 100%;
+  background-color: crimson;
+} */
+
+/* position解决结束 */
+
+/* flex解决开始 */
+/* .container{
+  display: flex;
+}
+.left{
+  width: 200px;
+  height: 100%;
+  background-color: crimson;
+}
+.right{
+  flex: 1;
+  height: 100%;
+  background-color: cyan;
+} */
+
+/* 右固定左自适应同理 */

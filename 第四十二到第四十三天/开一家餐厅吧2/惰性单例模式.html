@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+// 获取单例
+  var getSingle = function(fn){
+    var result;
+    return function(){
+      return result || (result=fn.apply(this,arguments));
+    };
+  };
+
+// 创建div登陆框
+  var createLoginLayer = function(){
+    var div = document.createElement('div');
+    div.innerHTML = '我是登录框';
+    document.body.appendChild(div);
+    return div;
+  }
+
+// 创建iframe的dom节点
+  var createIframe = function(){
+    // 创建iframe的代码
+  }
+
+  var createSingleLoginLayer = getSingle(createLoginLayer);
+  var createSingleIframe = getSingle(createIframe);
+
+  var loginLayer1 = createSingleLoginLayer();
+  var loginLayer2 = createSingleLoginLayer();
+
+  console.log(loginLayer1 === loginLayer2);
+
+</script>
+</html>

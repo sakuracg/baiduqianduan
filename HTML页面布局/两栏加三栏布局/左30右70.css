@@ -1,0 +1,51 @@
+/* 浮动解决 */
+
+/* .left{
+  float: left;
+  width: 30%;
+  height: 100%;
+  background-color: aqua;
+}
+
+.right{
+  float: left;
+  width: 70%;
+  height: 100%;
+  background-color: red;
+} */
+/* 浮动解决结束 */
+
+
+/* position解决开始 */
+
+/* .left,.right{
+  position: absolute;
+}
+.left{
+  left: 0;
+  width: 30%;
+  height: 100%;
+  background-color: blue;
+}
+.right{
+  left: 30%;
+  width: 70%;
+  height: 100%;
+  background-color: brown;
+} */
+/* position解决结束 */
+
+/* flex解决开始 */
+.container{
+  display: flex;
+}
+.left{
+  flex: 3;
+  height: 100%;
+  background-color: cadetblue;
+}
+.right{
+  flex: 7;
+  height: 100%;
+  background-color: chartreuse;
+}
