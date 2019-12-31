@@ -5,7 +5,7 @@ function Restaurant(obj){
   this.cash = obj.cash;
   this.seats = obj.seats;
   this.staff = obj.staff;
-}
+} 
 // 雇佣职员
 Restaurant.prototype.hire = function(newCook){
   newCook.id = '00' + this.staff.length;

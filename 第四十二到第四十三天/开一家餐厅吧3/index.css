@@ -1,0 +1,160 @@
+*{
+  margin: 0;
+  padding: 0;  
+}
+body{
+  font-family: sans-serif;  
+  box-sizing: border-box;    
+}
+ul,li{
+  list-style-type: none;
+}
+img{
+  width: 50px;
+  height: 50px;
+}
+/* 太少了就不新建一个基础样式了 */
+
+/* 头部开发开始 */
+header{
+  width: 700px;
+  height: 80px;
+  margin: 0 auto;
+  line-height: 80px;
+  text-align: center;  
+}
+
+header article{
+  width: 100%;
+  height: 40px;  
+  text-align: center;
+}
+header article h4, header article p{
+  height: 20px;
+  line-height: 20px;
+}
+header article p{
+  margin-top: 5px;
+  color: red;
+}
+
+/* 头部开发完毕 */
+
+/* 餐厅开发开始 */
+.restaurant{
+  width: 700px;
+  height: 400px;
+  margin: 0 auto;
+  margin-top: 60px;
+  border: 1px solid #ccc;  
+  position: relative;
+}
+.restaurant .cook{
+  float: left;
+  width: 30%;
+  height: 60%;
+  /* display: flex;
+  justify-content: center; */
+  display: table-cell;
+  text-align: center;
+  border: 1px solid green;  
+  border-top: 0;
+  border-left: 0;
+  position: relative; 
+}
+
+.restaurant .cook li{
+  margin-top: 10px;
+  font-size: .8rem;
+}
+
+.restaurant .cook #cookerState{  
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+}
+
+.restaurant .desk{
+  width: 300px;
+  height: 200px;
+  position: absolute;
+  top: 100px;
+  right: 0;
+  background: url('./img/desk.jpg') no-repeat;
+  background-size: contain;
+}
+
+.restaurant .attendant{
+  width: 100px;   
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border-bottom: 3px solid sienna;    
+}
+
+.attendant-bg{    
+  width: 50px;
+  height: 50px;   
+  position: relative;
+  bottom: 0;
+  left: 65px;
+  background: url('./img/attendant.jpg') no-repeat;
+  background-size: contain;
+  transition: all 1s;
+}
+
+.attendantOrigin{
+  position: relative;
+  bottom: 0;
+  left: 65px;
+}
+
+.rightMove{
+  left: 360px;
+  bottom: 180px;
+}
+
+.leftMove{
+  left: 240px;
+  bottom: 180px;
+}
+
+.attendant-speak{   
+  width: 100px;  
+  position: absolute;
+  top: -60px;
+  left: -40px;
+  font-size: .8rem;
+  word-wrap: break-word;  
+}
+
+/* 餐厅开发完毕 */
+
+/* 顾客 */
+.door-out{
+  position: absolute;
+  top: 420px;
+  left: 0;
+}
+.door-out li{
+  float: left;
+  margin-right: 10px;
+  position: relative;
+  transition: all 1s;  
+}
+.door-out li span,.restaurant>li span{
+  position: absolute;
+  top: -20px;
+  left: 12px;
+  width: 20px;  
+  text-align: right;
+  font-size: .8rem;
+  color: green;
+}
+.cus{
+  clear: both;
+  position: absolute;
+  left: 350px;    
+  top: -170px;
+}
